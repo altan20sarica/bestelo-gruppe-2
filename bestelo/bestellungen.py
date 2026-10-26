@@ -8,10 +8,9 @@ class Bestellposition:
         self.menge = menge
         self.preise_berechnen()
 
-    def preise_berechnen (self):
         self.netto = round(self.product.nettopreis * self.menge, 2)
         self.mwst  = round(self.netto * self.produkt.mwst_satz, 2)
         self.brutto = round(self.netto + self.mwst, 2 ) 
-print(f"Der netto preis liegt bei {self.netto}€")
-print(f"Die Mwst liegt bei {self.mwst}€")
-print(f"Der Bruttopreis liegt bei {self.brutto}€")      
+
+    def __str__ (self):
+        return f"{self.menge} * {self.product.name} - Brutto: {self.brutto} € "
