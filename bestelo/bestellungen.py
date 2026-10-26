@@ -6,7 +6,7 @@ class Bestellposition:
     def __init_ (self , produkt, menge = 1):
         self.produkt = produkt
         self.menge = menge
-        self.preise_berechnen()
+        
 
         self.netto = round(self.product.nettopreis * self.menge, 2)
         self.mwst  = round(self.netto * self.produkt.mwst_satz, 2)
