@@ -5,7 +5,10 @@ Unten: Geschaeftskunde und Verein                → Person 2 (Abschnitt 5.2)
 
 Bitte vor dem Arbeiten immer `git pull` – Person 1 und 2 teilen sich diese Datei.
 """
-#5.1
+
+### 5.1 PERSON 1 ###
+from datetime import date
+
 
 class Kunde:
     def __init__(self, kundennummer: int, name: str, email: str):
@@ -58,3 +61,21 @@ class Kunde:
         if not isinstance(other, Kunde):
             return NotImplemented
         return self.kundennummer == other.kundennummer
+
+
+
+class Privatkunde(Kunde):
+    def __init__(self, kundennummer: int, name: str, email: str, geburtsjahr: int, stammkunde: bool = False):
+        super().__init__(kundennummer, name, email)
+        self.geburtsjahr = geburtsjahr
+        self.stammkunde = stammkunde
+
+    @property
+    def geburtsjahr(self) -> int:
+        return self._geburtsjahr
+
+    @geburtsjahr.setter
+    def geburtsjahr(self, wert: int):
+        if wert < 1900 or wert > date.today().year:
+            raise ValueError("Geburtsjahr muss zwischen 1900 und dem aktuellen Jahr liegen")
+        self._geburtsjahr = wert
