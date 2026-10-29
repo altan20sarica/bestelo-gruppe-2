@@ -9,11 +9,11 @@ Ein Satz zu Ihrem Projekt: …
 
 | Name | GitHub-Name | Rolle | Eigene Klassen / Dateien |
 |------|-------------|-------|--------------------------|
-| …    | @…          | 1 · Teamleitung | `Kunde`, `Privatkunde` |
-| …    | @…          | 2     | `Geschaeftskunde`, `Verein` |
-| …    | @…          | 3     | `Produkt`, `daten/produkte.csv` |
-| …    | @…          | 4     | `Bestellposition`, `Bestellung` |
-| …    | @…          | 5     | Demo, README, UML, Integrationstest |
+| Altan Sarica      | @altan20sarica    | 1 · Teamleitung | `Kunde`, `Privatkunde` |
+| Yakub Karakaya    | @yakubtaha-ai     | 2      | `Geschaeftskunde`, `Verein` |
+| Mohammadmahdi Zandian | @Mehdixx007   | 3      | `Produkt`, `daten/produkte.csv` |
+| Umutcan Yesil     | @Umutcanyesil     | 4      | `Bestellposition`, `Bestellung` |
+| Yunus Apaydin     | @yunus0280        | 5      | Demo, README, UML, Integrationstest |
 
 (Teamleitung bitte markieren.)
 
