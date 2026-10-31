@@ -47,13 +47,13 @@ class Produkt:
 
     # 3. Property-Methoden für die Attribute der Klasse, um die Validierung und Formatierung der Werte zu gewährleisten
     @property
-    def bezeichnung(self):
+    def bezeichnung(self) -> str:
         return (
             self._bezeichnung
         )  # _bezeichnung ist ein privates Attribut, das nur innerhalb der Klasse verwendet werden sollte
 
     @bezeichnung.setter
-    def bezeichnung(self, wert):
+    def bezeichnung(self, wert) -> None:
         leerzeichen = wert.strip()  # Entfernt führende und nachgestellte Leerzeichen
         if (
             leerzeichen == ""
@@ -62,7 +62,7 @@ class Produkt:
         self._bezeichnung = leerzeichen
 
     @property
-    def nettopreis(self):
+    def nettopreis(self) -> float:
         return self._nettopreis
 
     @nettopreis.setter
@@ -73,11 +73,11 @@ class Produkt:
         self._nettopreis = round(wert, 2)
 
     @property
-    def kategorie(self):
+    def kategorie(self) -> str:
         return self._kategorie
 
     @kategorie.setter
-    def kategorie(self, wert):
+    def kategorie(self, wert) -> None:
         if (
             wert not in self.KATEGORIEN
         ):  # hier wird überprüft, ob die Kategorie gültig ist
@@ -89,11 +89,13 @@ class Produkt:
     @property
     def artikelnummer(
         self,
+    ) -> (
+        int
     ):  # Getter-Methode für das Attribut artikelnummer das nur gelesen werden kann, da es keine Setter-Methode gibt
         return self._artikelnummer
 
     @property
-    def mwst_satz(self):
+    def mwst_satz(self) -> float:
         if (
             self.kategorie in self.ERMAESSIGTE_KATEGORIEN
         ):  # hier wird überprüft, ob die Kategorie des Produkts in der Liste der ermäßigten Kategorien enthalten ist
@@ -106,21 +108,20 @@ class Produkt:
             )  # Wenn nein, wird der reguläre Steuersatz zurückgegeben
 
     @property
-    def bruttopreis(self):
+    def bruttopreis(self) -> float:
         return round(self.nettopreis * (1 + self.mwst_satz), 2)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return (
             f"{self.artikelnummer} {self.bezeichnung} – {self.nettopreis:.2f} € netto"
         )
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"Produkt({self.artikelnummer!r}, {self.bezeichnung!r}, {self.nettopreis!r}, {self.kategorie!r})"
 
         # !r macht, dass die Werte in der Repräsentation in Anführungszeichen gesetzt werden, um anzuzeigen, dass es sich um Strings handelt.
 
-    # __eq__ wird verwendet, um die Gleichheit von zwei Objekten zu überprüfen.
-    def __eq__(self, other):
+    def __eq__(self, other) -> bool:
         if not isinstance(
             other, Produkt
         ):  # isinstance() ist eine Python-Funktion, mit der man überprüfen kann, ob eine Variable einen bestimmten Datentyp hat. (Bool: True/False)
