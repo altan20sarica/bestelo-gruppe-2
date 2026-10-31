@@ -27,7 +27,8 @@ class Produkt:
         # Hier ist die Prüfung in __init__ notwendig, da die Artikelnummer nur einmalig beim Erstellen des Objekts gesetzt werden kann.
         # Also kann es direkt zugewiesen werden, da kein Setter existiert.
         if (
-            not artikelnummer.startswith(
+            not isinstance(artikelnummer, str)
+            or not artikelnummer.startswith(
                 "P-"
             )  # überprüft, ob die Artikelnummer mit "P-" beginnt
             or len(artikelnummer)
@@ -124,27 +125,27 @@ class Produkt:
             other, Produkt
         ):  # isinstance() ist eine Python-Funktion, mit der man überprüfen kann, ob eine Variable einen bestimmten Datentyp hat. (Bool: True/False)
             return NotImplemented
-        else:
-            return self.artikelnummer == other.artikelnummer
+
+        return self.artikelnummer == other.artikelnummer
 
     def __lt__(
         self, other
     ):  # __lt__ bedeutet less than (kleiner als) nettopreis < other nettopreis
         if not isinstance(other, Produkt):
             return NotImplemented
-        else:
-            return self.nettopreis < other.nettopreis
+
+        return self.nettopreis < other.nettopreis
 
     # aus_csv_zeile(zeile)
     @classmethod
     def aus_csv_zeile(cls, zeile):
         zeile = zeile.strip()
 
-        artikelnummer, bezeichnung, preis, kategorie = kategorie.split(";")
+        artikelnummer, bezeichnung, preis, kategorie = zeile.split(";")
         return cls(artikelnummer, bezeichnung, float(preis), kategorie)
         # float(preis) wandelt den Preis von einem String in eine Kommazahl um.
-        # cls() erstellt ein neues Produktobjekt also bezeichnet die Klasse selbst
-        # self() bezeichnet ein bereits vorhandenes Objekt
+        # cls(...) dagegen erstellt eine neue Instanz der Klasse.
+        # self ist die Referenz auf ein bereits vorhandenes Objekt.
 
     # aus_csv_datei(pfad)
     @classmethod
@@ -162,9 +163,3 @@ class Produkt:
                         produkt
                     )  # fügt das produkt der Liste hinzu produkte []
         return produkte
-
-
-# # Test
-# p = Produkt.aus_csv_zeile("P-1001;Kaffeebohnen 500 g;8.90;Lebensmittel\n")
-# print(p)
-# print(repr(p))
