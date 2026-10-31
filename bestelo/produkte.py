@@ -5,6 +5,7 @@ Die Produktdatei gehört nach bestelo/daten/produkte.csv.
 """
 
 
+# ### 5.3 PERSON 3 ###
 class Produkt:
 
     # 1. Konstanten für die Kategorien und Steuersätze
@@ -46,7 +47,9 @@ class Produkt:
     # 3. Property-Methoden für die Attribute der Klasse, um die Validierung und Formatierung der Werte zu gewährleisten
     @property
     def bezeichnung(self):
-        return self._bezeichnung
+        return (
+            self._bezeichnung
+        )  # _bezeichnung ist ein privates Attribut, das nur innerhalb der Klasse verwendet werden sollte
 
     @bezeichnung.setter
     def bezeichnung(self, wert):
@@ -88,10 +91,31 @@ class Produkt:
     ):  # Getter-Methode für das Attribut artikelnummer das nur gelesen werden kann, da es keine Setter-Methode gibt
         return self._artikelnummer
 
+    @property
+    def mwst_satz(self):
+        if (
+            self.kategorie in self.ERMAESSIGTE_KATEGORIEN
+        ):  # hier wird überprüft, ob die Kategorie des Produkts in der Liste der ermäßigten Kategorien enthalten ist
+            return (
+                self.MWST_ERMAESSIGT
+            )  # Wenn ja, wird der ermäßigte Steuersatz zurückgegeben
+        else:
+            return (
+                self.MWST_REGULAER
+            )  # Wenn nein, wird der reguläre Steuersatz zurückgegeben
 
-# Beispiel für die Verwendung der Klasse Produkt
-p = Produkt("P-1234", "Apfel", 0.5, "Lebensmittel")
-print(p.artikelnummer)  # Ausgabe: P-1234
-print(p.bezeichnung)  # Ausgabe: Apfel
-print(p.nettopreis)  # Ausgabe: 0.5
-print(p.kategorie)  # Ausgabe: Lebensmittel
+    @property
+    def bruttopreis(self):
+        return round(self.nettopreis * (1 + self.mwst_satz), 2)
+
+    def __str__(self):
+        return (
+            f"{self.artikelnummer} {self.bezeichnung} – {self.nettopreis:.2f} € netto"
+        )
+
+    def __repr__(self):
+        return f"Produkt({self.artikelnummer!r}, {self.bezeichnung!r}, {self.nettopreis!r}, {self.kategorie!r})"
+
+    # !r macht, dass die Werte in der Repräsentation in Anführungszeichen gesetzt werden, um anzuzeigen, dass es sich um Strings handelt.
+    
+    
