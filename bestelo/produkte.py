@@ -151,7 +151,7 @@ class Produkt:
     def aus_csv_datei(cls, pfad):
         produkte = []
 
-        with open(pfad, "r", encoding="utf-8") as datei:
+        with open(pfad, "r", encoding="utf-8") as datei:  # "r"
 
             zeilen = datei.readlines()  # readlines() → liest alle Zeilen in eine Liste.
 
@@ -164,7 +164,7 @@ class Produkt:
         return produkte
 
 
-# Test
-p = Produkt.aus_csv_zeile("P-1001;Kaffeebohnen 500 g;8.90;Lebensmittel\n")
-print(p)
-print(repr(p))
+# # Test
+# p = Produkt.aus_csv_zeile("P-1001;Kaffeebohnen 500 g;8.90;Lebensmittel\n")
+# print(p)
+# print(repr(p))
