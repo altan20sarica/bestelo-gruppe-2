@@ -5,6 +5,7 @@ Die Produktdatei gehört nach bestelo/daten/produkte.csv.
 """
 
 
+# ### 5.3 PERSON 3 ###
 class Produkt:
 
     # 1. Konstanten für die Kategorien und Steuersätze
@@ -116,15 +117,5 @@ class Produkt:
         return f"Produkt({self.artikelnummer!r}, {self.bezeichnung!r}, {self.nettopreis!r}, {self.kategorie!r})"
 
     # !r macht, dass die Werte in der Repräsentation in Anführungszeichen gesetzt werden, um anzuzeigen, dass es sich um Strings handelt.
-
-    # return f"{self.artikelnummer}: {self.bezeichnung} ({self.kategorie}) - Nettopreis: {self.nettopreis} €, Brutto: {self.bruttopreis} €"
-    # hier wird die Artikelnummer, Bezeichnung, Kategorie, Nettopreis und Brutto-Preis des Produkts in einem lesbaren Format zurückgegeben.
-
-
-# Beispiel die als Ausgabe zählen
-# P = Produkt("P-1001", "Kaffeebohnen 500 g", 8.9, "Lebensmittel")
-# print(str(P) == "P-1001 Kaffeebohnen 500 g – 8.90 € netto")
-# print(repr(P) == "Produkt('P-1001', 'Kaffeebohnen 500 g', 8.9, 'Lebensmittel')")
-
-# P2 = Produkt("P-1006", "USB-C-Ladekabel 2 m", 9.9, "Elektronik")
-# print(P2)
+    
+    
