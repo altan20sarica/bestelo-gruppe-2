@@ -116,6 +116,55 @@ class Produkt:
     def __repr__(self):
         return f"Produkt({self.artikelnummer!r}, {self.bezeichnung!r}, {self.nettopreis!r}, {self.kategorie!r})"
 
-    # !r macht, dass die Werte in der Repräsentation in Anführungszeichen gesetzt werden, um anzuzeigen, dass es sich um Strings handelt.
-    
-    
+        # !r macht, dass die Werte in der Repräsentation in Anführungszeichen gesetzt werden, um anzuzeigen, dass es sich um Strings handelt.
+
+    # __eq__ wird verwendet, um die Gleichheit von zwei Objekten zu überprüfen.
+    def __eq__(self, other):
+        if not isinstance(
+            other, Produkt
+        ):  # isinstance() ist eine Python-Funktion, mit der man überprüfen kann, ob eine Variable einen bestimmten Datentyp hat. (Bool: True/False)
+            return NotImplemented
+        else:
+            return self.artikelnummer == other.artikelnummer
+
+    def __lt__(
+        self, other
+    ):  # __lt__ bedeutet less than (kleiner als) nettopreis < other nettopreis
+        if not isinstance(other, Produkt):
+            return NotImplemented
+        else:
+            return self.nettopreis < other.nettopreis
+
+    # aus_csv_zeile(zeile)
+    @classmethod
+    def aus_csv_zeile(cls, zeile):
+        zeile = zeile.strip()
+
+        artikelnummer, bezeichnung, preis, kategorie = kategorie.split(";")
+        return cls(artikelnummer, bezeichnung, float(preis), kategorie)
+        # float(preis) wandelt den Preis von einem String in eine Kommazahl um.
+        # cls() erstellt ein neues Produktobjekt also bezeichnet die Klasse selbst
+        # self() bezeichnet ein bereits vorhandenes Objekt
+
+    # aus_csv_datei(pfad)
+    @classmethod
+    def aus_csv_datei(cls, pfad):
+        produkte = []
+
+        with open(pfad, "r", encoding="utf-8") as datei:
+
+            zeilen = datei.readlines()  # readlines() → liest alle Zeilen in eine Liste.
+
+            for zeile in zeilen[1:]:  # zeilen ab 0 1 bis Ende überspringt die Kopfzeile
+                if zeile.strip():  # aktuelle Zeile überprüfen ob leer Zeile gibt
+                    produkt = cls.aus_csv_zeile(zeile)
+                    produkte.append(
+                        produkt
+                    )  # fügt das produkt der Liste hinzu produkte []
+        return produkte
+
+
+# Test
+p = Produkt.aus_csv_zeile("P-1001;Kaffeebohnen 500 g;8.90;Lebensmittel\n")
+print(p)
+print(repr(p))
