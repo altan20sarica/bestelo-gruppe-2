@@ -34,10 +34,52 @@ classDiagram
     class Kunde {
         +kundennummer: int
         +name: str
+        +begruessung() str
+        +rabattsatz() float
     }
-    class Privatkunde
+
+    class Privatkunde {
+        +geburtsjahr: int
+        +rabattsatz() float
+    }
+
+    class Geschaeftskunde {
+        +ansprechpartner: str
+        +rabattsatz() float
+    }
+
+    class Verein {
+        +rabattsatz() float
+    }
+
+    class Bestellung {
+        +bestellnr: str
+        +abgeschlossen: bool
+        +positionen: list
+        +position_hinzufuegen(menge, produkt)
+        +gesamt_netto() float
+    }
+
+    class Position {
+        +menge: int
+        +produkt: Produkt
+        +zeilen_preis() float
+    }
+
+    class Produkt {
+        +produkt_id: int
+        +name: str
+        +preis: float
+        +aus_csv(pfad) list
+    }
+
     Kunde <|-- Privatkunde
-```
+    Kunde <|-- Geschaeftskunde
+    Kunde <|-- Verein
+
+    Kunde "1" --> "0..*" Bestellung : hat
+    Bestellung "1" *-- "1..*" Position : enthält
+    Position "1" --> "1" Produkt : referenziert
 
 *(Person 5: vollständig ausbauen – alle 7 Klassen mit Eigenschaften, Methoden und Beziehungen.)*
 
