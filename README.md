@@ -3,7 +3,9 @@
 > Allgemeines Shopsystem in Python · Programmieren 2 (BW220) · HWG Ludwigshafen
 > Die Aufgabenbeschreibung finden Sie auf OLAT.
 
-Ein Satz zu Ihrem Projekt: …
+Ein Satz zu Ihrem Projekt:
+Bestelo ist ein Konsolen-basiertes Bestellsystem, das es ermöglicht, Produkte aus einer CSV-Datei zu laden, verschiedene Kundentypen (Privatkunden, Geschäftskunden, Vereine) mit individuellen Rabatten zu verwalten und Bestellungen inklusive vollständigem Rechnungsdruck (Netto, Rabatt, MwSt., Brutto) abzuwickeln.
+
 
 ## Team
 
