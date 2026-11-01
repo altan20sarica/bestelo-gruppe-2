@@ -80,7 +80,7 @@ classDiagram
     Kunde "1" --> "0..*" Bestellung : hat
     Bestellung "1" *-- "1..*" Position : enthält
     Position "1" --> "1" Produkt : referenziert
-
+```
 *(Person 5: vollständig ausbauen – alle 7 Klassen mit Eigenschaften, Methoden und Beziehungen.)*
 
 ## Ideen für Phase 2
