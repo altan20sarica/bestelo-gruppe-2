@@ -15,12 +15,12 @@ class Kunde:
 
     def __init__(self, kundennummer: int, name: str, email: str) -> None:
         """Erstellt Kunde und prüft Angabe"""
+        if type(kundennummer) is not int or kundennummer< 1000: 
+            raise ValueError("Kundennummer muss eine ganze Zahl und mind. 1000 sein")
+
         self._kundennummer = kundennummer
         self.name = name
         self.email = email
-
-        if kundennummer< 1000: 
-            raise ValueError("Kundennummer muss mind. 1000 sein")
 
     @property
     def kundennummer(self) -> int:
@@ -35,10 +35,9 @@ class Kunde:
     @name.setter
     def name(self, wert: str) -> None:
         """Setzt Name der nicht leer sein darf"""
-        wert = wert.strip()
-        if not wert:
+        if not isinstance(wert, str) or not wert.strip():
             raise ValueError("Name darf nicht leer sein")
-        self._name= wert
+        self._name= wert.strip()
 
     @property               
     def email(self) ->str:
@@ -52,9 +51,11 @@ class Kunde:
             raise ValueError("Ungültige EMail Adresse")   
         self._email = wert
 
-    @staticmethod   #staticmethod braucht kein self, weil es unabhängig von Kundenobjekten funktioniert"""
+    @staticmethod
     def ist_gueltige_email(email: str) -> bool:
         """Prüft ob E-mail genau ein @ Zeichen und ein Punkt hat"""
+        if not isinstance(email, str):
+            return False
         return email.count("@") == 1 and "." in email.split("@")[1]
     
 
@@ -118,14 +119,14 @@ class Privatkunde(Kunde):
         self._stammkunde = wert
         
     def alter(self, stichjahr: int | None = None) -> int:
-        """Berechnet Alter im Stichjahr oder im aktuekken Jahr"""
+        """Berechnet Alter im Stichjahr oder im aktuellen Jahr"""
         if stichjahr is None: 
             stichjahr = date.today().year
         return stichjahr - self.geburtsjahr
 
     def rabattsatz(self) -> float:
         """Gibt für Stammkunden 2 Prozent Rabatt zurück,
-          für keine Stammklunden 0 Prozent"""
+          für keine Stammkunden 0 Prozent"""
         if self.stammkunde:
             return 0.02
         return 0.0
