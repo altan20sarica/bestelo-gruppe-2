@@ -25,8 +25,8 @@ def test_ablauf_verein_bestellt_orangensaft():
     """ 1. Produkte aus CSV laden"""
     produkte = Produkt.aus_csv(CSV_PFAD)
     
-    """2. Orangensaft (P-1003) heraussuchen"""
-    # Wir suchen nach dem Namen oder der ID, je nachdem was dein Produkt-Objekt hat
+    """2. Orangensaft (P-1003) heraussuchen
+     suchen nach dem Namen oder der ID, je nachdem was dein Produkt-Objekt hat"""
     orangensaft = next(p for p in produkte if "Orangensaft" in p.name)
     
     """ 3. Verein anlegen (5% Rabatt)"""
@@ -50,7 +50,7 @@ def test_ablauf_verein_bestellt_orangensaft():
     mwst = (netto - rabatt) * 0.19
     brutto = (netto - rabatt) + mwst
     
-    # Prüfen, ob der Bruttobetrag auf 2 Nachkommastellen gerundet 75.97 ergibt
+    """Prüfen, ob der Bruttobetrag auf 2 Nachkommastellen gerundet 75.97 ergibt"""
     assert round(brutto, 2) == 75.97
 
 
