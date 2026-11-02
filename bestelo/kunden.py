@@ -137,16 +137,102 @@ class Privatkunde(Kunde):
 class Geschaeftskunde(Kunde):
     def __init__(self, kundennummer: int, name: str, email: str, firmenname: str, ust_id: str, zahlungsziehl_tage: int = 14):
         super().__init__(kundennummer, name, email)
-        self.name = firmenname
+        self.firmenname = firmenname
         self.ust_id = ust_id
         self.zahlungsziehl_tage = zahlungsziehl_tage
 
     @property
+    def firmenname(self) -> str:
+        """Gibt den Firmennamen zurück"""
+        return self.name
+
+    @firmenname.setter
+    def firmenname(self, wert: str) -> None:
+        """Setzt den Firmennamen, der nicht leer sein darf"""
+        if not isinstance(wert, str) or not wert.strip():
+            raise ValueError("Firmenname darf nicht leer sein")
+        self.name = wert.strip()
+    
+    @property
     def ust_id(self) -> str:
+        """Gibt die Umsatzsteuer-ID zurück"""
         return self._ust_id
 
     @ust_id.setter
     def ust_id(self, wert: str) -> None:
+        """Setzt die Umsatzsteuer-ID, der nicht leer sein darf"""
         if not isinstance(wert, str) or not wert.strip():
             raise ValueError("USt-ID darf nicht leer sein")
         self._ust_id = wert.strip()
+
+    @property
+    def zahlungsziehl_tage(self) -> int:
+        """Gibt das Zahlungsziel in Tagen zurück"""
+        return self._zahlungsziehl_tage
+
+    @zahlungsziehl_tage.setter
+    def zahlungsziehl_tage(self, wert: int) -> None:
+        """Prüft und setzt Zahlungsziel"""
+        if not self.ist_gueltiges_zahlungsziel(wert):
+            raise ValueError("Zahlungsziel muss zwischen 0 und 60 Tagen liegen")
+        self._zahlungsziehl_tage = wert
+
+    @staticmethod
+    def ist_gueltiges_zahlungsziel(zahlungsziel: int) -> bool:
+        """Prüft ob das Zahlungsziel zwischen 0 und 60 Tagen liegt"""
+        return 0 <= zahlungsziel <= 60
+
+    def begruessung(self) -> str:
+        """Begrüßt die Person mit eigenen Namen"""
+        return f"Sehr geehrte Damen und Herren der {self.name},"
+
+    def rabattsatz(self) -> float:
+        """Gibt für Geschäftskunden 3 Prozent Rabatt zurück,
+          für keine Geschäftskunden 0 Prozent"""
+        if self.stammkunde:
+            return 0.03
+        return 0.0
+    
+    def __str__(self) -> str:
+        """Gibt lesbare Darstellung des Kunden zurück,
+          mit Kundennummer und Name"""
+        return f"Kunde {self.kundennummer}: {self.firmenname}\n (Ansprechpartner: {self.name})"
+
+class Verein(Kunde):
+    """Erweitert Kunde um Registernummer und gemeinnützigen Status"""
+    
+    def __init__(self, kundennummer: int, name: str, email: str, registernummer: str, gemeinnuetzig: bool):
+        super().__init__(kundennummer, name, email)
+        self.registernummer = registernummer
+        self.gemeinnuetziger_status = gemeinnuetziger_status
+
+    @property
+    def registernummer(self) -> str:
+        """Gibt die Registernummer zurück"""
+        return self._registernummer
+
+    @registernummer.setter
+    def registernummer(self, wert: str) -> None:
+        """Setzt die Registernummer, die nicht leer sein darf"""
+        if not isinstance(wert, str) or not wert.strip():
+            raise ValueError("Registernummer darf nicht leer sein")
+        self._registernummer = wert.strip()
+
+    @property
+    def gemeinnuetziger_status(self) -> bool:
+        """Gibt den gemeinnützigen Status zurück"""
+        return self._gemeinnuetziger_status
+
+    @gemeinnuetziger_status.setter
+    def gemeinnuetziger_status(self, wert: bool) -> None:
+        """Setzt den gemeinnützigen Status auf True oder False"""
+        if not isinstance(wert, bool):
+            raise ValueError("Gemeinnütziger Status muss entweder True oder False sein")
+        self._gemeinnuetziger_status = wert
+
+    def rabattsatz(self) -> float:
+        """Gibt für gemeinnützige Vereine 5 Prozent Rabatt zurück,
+          für keine gemeinnützigen Vereine 0 Prozent"""
+        if self.gemeinnuetziger_status:
+            return 0.05
+        return 0.0
