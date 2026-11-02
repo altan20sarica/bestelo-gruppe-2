@@ -79,3 +79,15 @@ class Privatkunde(Kunde):
         if wert < 1900 or wert > date.today().year:
             raise ValueError("Geburtsjahr muss zwischen 1900 und dem aktuellen Jahr liegen")
         self._geburtsjahr = wert
+
+
+### 5.2 PERSON 2 ###
+
+class Geschaeftskunde(Kunde):
+    def __init__(self, kundennummer: int, name: str, email: str, firmenname: str, ust_id: str, zahlungsziehl_tage: int = 14):
+        super().__init__(kundennummer, name, email)
+        self.name = firmenname
+        self.ust_id = ust_id
+        self.zahlungsziehl_tage = zahlungsziehl_tage
+
+    @property
