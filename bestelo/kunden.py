@@ -15,7 +15,7 @@ class Kunde:
 
     def __init__(self, kundennummer: int, name: str, email: str) -> None:
         """Erstellt Kunde und prüft Angabe"""
-        self.kundennummer = kundennummer
+        self._kundennummer = kundennummer
         self.name = name
         self.email = email
 
@@ -24,7 +24,7 @@ class Kunde:
 
     @property
     def kundennummer(self) -> int:
-        """Gibt unveränderbare Kundennummer zurück"""
+        """Gibt unveränderbare/nur lesbare Kundennummer zurück"""
         return self._kundennummer
 
     @property
@@ -52,7 +52,7 @@ class Kunde:
             raise ValueError("Ungültige EMail Adresse")   
         self._email = wert
 
-    @staticmethod
+    @staticmethod   #staticmethod braucht kein self, weil es unabhängig von Kundenobjekten funktioniert"""
     def ist_gueltige_email(email: str) -> bool:
         """Prüft ob E-mail genau ein @ Zeichen und ein Punkt hat"""
         return email.count("@") == 1 and "." in email.split("@")[1]
@@ -74,10 +74,10 @@ class Kunde:
     def __repr__(self) -> str:
         """Gibt technische Darstellung des Kunden zurück,
                   mit Kundenklasse, Kundennummer und Name"""
-        return f"{type(self).__name__} ({self.kundennummer}, {self.name!r})"    """!r setzt Name bei Ausgabe in ' '     """
+        return f"{type(self).__name__}({self.kundennummer}, {self.name!r})"    #!r setzt Name bei Ausgabe in 'Anführungszeichen'     
 
     def __eq__(self, other: object) -> bool:
-        """Vergleicht zwei Kunden anhand der Kundennummer"""
+        """Vergleicht zwei Kunden anhand der Kundennummer, bzw das __eq__ definiert das Verhalten des Vergleichsoperators =="""
         if not isinstance(other, Kunde):
             return NotImplemented
         return self.kundennummer == other.kundennummer
