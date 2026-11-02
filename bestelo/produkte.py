@@ -27,7 +27,8 @@ class Produkt:
         # Hier ist die Prüfung in __init__ notwendig, da die Artikelnummer nur einmalig beim Erstellen des Objekts gesetzt werden kann.
         # Also kann es direkt zugewiesen werden, da kein Setter existiert.
         if (
-            not artikelnummer.startswith(
+            not isinstance(artikelnummer, str)
+            or not artikelnummer.startswith(
                 "P-"
             )  # überprüft, ob die Artikelnummer mit "P-" beginnt
             or len(artikelnummer)
@@ -46,13 +47,13 @@ class Produkt:
 
     # 3. Property-Methoden für die Attribute der Klasse, um die Validierung und Formatierung der Werte zu gewährleisten
     @property
-    def bezeichnung(self):
+    def bezeichnung(self) -> str:
         return (
             self._bezeichnung
         )  # _bezeichnung ist ein privates Attribut, das nur innerhalb der Klasse verwendet werden sollte
 
     @bezeichnung.setter
-    def bezeichnung(self, wert):
+    def bezeichnung(self, wert) -> None:
         leerzeichen = wert.strip()  # Entfernt führende und nachgestellte Leerzeichen
         if (
             leerzeichen == ""
@@ -61,7 +62,7 @@ class Produkt:
         self._bezeichnung = leerzeichen
 
     @property
-    def nettopreis(self):
+    def nettopreis(self) -> float:
         return self._nettopreis
 
     @nettopreis.setter
@@ -72,11 +73,11 @@ class Produkt:
         self._nettopreis = round(wert, 2)
 
     @property
-    def kategorie(self):
+    def kategorie(self) -> str:
         return self._kategorie
 
     @kategorie.setter
-    def kategorie(self, wert):
+    def kategorie(self, wert) -> None:
         if (
             wert not in self.KATEGORIEN
         ):  # hier wird überprüft, ob die Kategorie gültig ist
@@ -88,11 +89,13 @@ class Produkt:
     @property
     def artikelnummer(
         self,
+    ) -> (
+        int
     ):  # Getter-Methode für das Attribut artikelnummer das nur gelesen werden kann, da es keine Setter-Methode gibt
         return self._artikelnummer
 
     @property
-    def mwst_satz(self):
+    def mwst_satz(self) -> float:
         if (
             self.kategorie in self.ERMAESSIGTE_KATEGORIEN
         ):  # hier wird überprüft, ob die Kategorie des Produkts in der Liste der ermäßigten Kategorien enthalten ist
@@ -105,17 +108,59 @@ class Produkt:
             )  # Wenn nein, wird der reguläre Steuersatz zurückgegeben
 
     @property
-    def bruttopreis(self):
+    def bruttopreis(self) -> float:
         return round(self.nettopreis * (1 + self.mwst_satz), 2)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return (
             f"{self.artikelnummer} {self.bezeichnung} – {self.nettopreis:.2f} € netto"
         )
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"Produkt({self.artikelnummer!r}, {self.bezeichnung!r}, {self.nettopreis!r}, {self.kategorie!r})"
 
-    # !r macht, dass die Werte in der Repräsentation in Anführungszeichen gesetzt werden, um anzuzeigen, dass es sich um Strings handelt.
-    
-    
+        # !r macht, dass die Werte in der Repräsentation in Anführungszeichen gesetzt werden, um anzuzeigen, dass es sich um Strings handelt.
+
+    def __eq__(self, other) -> bool:
+        if not isinstance(
+            other, Produkt
+        ):  # isinstance() ist eine Python-Funktion, mit der man überprüfen kann, ob eine Variable einen bestimmten Datentyp hat. (Bool: True/False)
+            return NotImplemented
+
+        return self.artikelnummer == other.artikelnummer
+
+    def __lt__(
+        self, other
+    ):  # __lt__ bedeutet less than (kleiner als) nettopreis < other nettopreis
+        if not isinstance(other, Produkt):
+            return NotImplemented
+
+        return self.nettopreis < other.nettopreis
+
+    # aus_csv_zeile(zeile)
+    @classmethod
+    def aus_csv_zeile(cls, zeile):
+        zeile = zeile.strip()
+
+        artikelnummer, bezeichnung, preis, kategorie = zeile.split(";")
+        return cls(artikelnummer, bezeichnung, float(preis), kategorie)
+        # float(preis) wandelt den Preis von einem String in eine Kommazahl um.
+        # cls(...) dagegen erstellt eine neue Instanz der Klasse.
+        # self ist die Referenz auf ein bereits vorhandenes Objekt.
+
+    # aus_csv_datei(pfad)
+    @classmethod
+    def aus_csv_datei(cls, pfad):
+        produkte = []
+
+        with open(pfad, "r", encoding="utf-8") as datei:  # "r"
+
+            zeilen = datei.readlines()  # readlines() → liest alle Zeilen in eine Liste.
+
+            for zeile in zeilen[1:]:  # zeilen ab 0 1 bis Ende überspringt die Kopfzeile
+                if zeile.strip():  # aktuelle Zeile überprüfen ob leer Zeile gibt
+                    produkt = cls.aus_csv_zeile(zeile)
+                    produkte.append(
+                        produkt
+                    )  # fügt das produkt der Liste hinzu produkte []
+        return produkte
