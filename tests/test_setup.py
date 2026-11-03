@@ -23,7 +23,7 @@ def test_ablauf_verein_bestellt_orangensaft():
     und den Bruttobetrag (75.97 €) prüfen.
     """
     """ 1. Produkte aus CSV laden"""
-    produkte = Produkt.aus_csv(CSV_PFAD)
+    produkte = Produkt.aus_csv_datei(CSV_PFAD)
     
     """2. Orangensaft (P-1003) heraussuchen
      suchen nach dem Namen oder der ID, je nachdem was dein Produkt-Objekt hat"""
