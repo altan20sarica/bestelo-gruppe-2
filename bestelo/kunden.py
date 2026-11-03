@@ -135,7 +135,8 @@ class Privatkunde(Kunde):
 ### 5.2 PERSON 2 ###
 
 class Geschaeftskunde(Kunde):
-    def __init__(self, kundennummer: int, name: str, email: str, firmenname: str, ust_id: str, zahlungsziehl_tage: int = 14):
+    def __init__(self, kundennummer: int, name: str, email: str, firmenname: str, ust_id: str, zahlungsziehl_tage: int = 14) -> None:
+        """Erstellt Geschäftskunde mit Firmenname, Umsatzsteuer-ID und Zahlungszieltagen"""
         super().__init__(kundennummer, name, email)
         self.firmenname = firmenname
         self.ust_id = ust_id
@@ -183,7 +184,7 @@ class Geschaeftskunde(Kunde):
         return 0 <= zahlungsziel <= 60
 
     def begruessung(self) -> str:
-        """Begrüßt die Person mit eigenen Namen"""
+        """Begrüßt Geschäftskunden mit Firmenname"""
         return f"Sehr geehrte Damen und Herren der {self.name},"
 
     def rabattsatz(self) -> float:
@@ -201,10 +202,10 @@ class Geschaeftskunde(Kunde):
 class Verein(Kunde):
     """Erweitert Kunde um Registernummer und gemeinnützigen Status"""
     
-    def __init__(self, kundennummer: int, name: str, email: str, registernummer: str, gemeinnuetzig: bool):
+    def __init__(self, kundennummer: int, name: str, email: str, registernummer: str, gemeinnuetzig: bool = True) -> None:
         super().__init__(kundennummer, name, email)
         self.registernummer = registernummer
-        self.gemeinnuetziger_status = gemeinnuetziger_status
+        self.gemeinnuetzig = gemeinnuetzig
 
     @property
     def registernummer(self) -> str:
@@ -218,21 +219,30 @@ class Verein(Kunde):
             raise ValueError("Registernummer darf nicht leer sein")
         self._registernummer = wert.strip()
 
-    @property
-    def gemeinnuetziger_status(self) -> bool:
-        """Gibt den gemeinnützigen Status zurück"""
-        return self._gemeinnuetziger_status
+    @staticmethod
+    def ist_gueltige_registernummer(registernummer: str) -> bool:
+        """Prüft ob die Registernummer mit VR leerzeichen beginnt und danach nur Ziffern enthält"""
+        return isinstance(registernummer, str) and registernummer.startswith("VR ") and registernummer[3:].isdigit()
 
-    @gemeinnuetziger_status.setter
-    def gemeinnuetziger_status(self, wert: bool) -> None:
+    @property
+    def gemeinnuetzig(self) -> bool:
+        """Gibt den gemeinnützigen Status zurück"""
+        return self._gemeinnuetzig
+
+    @gemeinnuetzig.setter
+    def gemeinnuetzig(self, wert: bool) -> None:
         """Setzt den gemeinnützigen Status auf True oder False"""
         if not isinstance(wert, bool):
             raise ValueError("Gemeinnütziger Status muss entweder True oder False sein")
-        self._gemeinnuetziger_status = wert
+        self._gemeinnuetzig = wert
 
     def rabattsatz(self) -> float:
         """Gibt für gemeinnützige Vereine 5 Prozent Rabatt zurück,
           für keine gemeinnützigen Vereine 0 Prozent"""
-        if self.gemeinnuetziger_status:
+        if self.gemeinnuetzig:
             return 0.05
         return 0.0
+
+    def begruessung(self) -> str:
+        """Begrüßt den Vereinsvorstand mit Vereinsnamen"""
+        return f"An den Vorstand des Vereins {self.name},"
