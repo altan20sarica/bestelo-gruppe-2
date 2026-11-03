@@ -8,7 +8,6 @@ Sie dürfen die Datei behalten – sie zählt aber nicht zu den 18 Pflicht-Tests
 def test_paket_ist_importierbar() -> None:
     import bestelo
     assert bestelo is not None
-<<<<<<< HEAD
 
 
 from pathlib import Path
@@ -68,5 +67,3 @@ def test_demo_zeigt_bruttosumme(capsys):
     
     """ Prüfen, ob der String "79.66" in der Ausgabe vorkommt"""
     assert "79.66" in ausgabe 
-=======
->>>>>>> 48bb49df04b4b80b9724312463ab4cb1f8865053

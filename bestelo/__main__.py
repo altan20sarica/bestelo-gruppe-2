@@ -7,13 +7,12 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-<<<<<<< HEAD
 from pathlib import Path
 from bestelo.bestellungen import Bestellung
 from bestelo.kunden import Geschaeftskunde, Privatkunde, Verein
 from bestelo.produkte import Produkt
 
- """Pfad zur CSV-Datei"""
+"""Pfad zur CSV-Datei"""
 CSV_PFAD = Path(__file__).parent / "daten" / "produkte.csv"
 
 
@@ -83,5 +82,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-=======
->>>>>>> 48bb49df04b4b80b9724312463ab4cb1f8865053
