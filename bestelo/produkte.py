@@ -166,9 +166,6 @@ def aus_csv_zeile(cls, zeile):
     # self ist die Referenz auf ein bereits vorhandenes Objekt.
 
 
-@classmethod
-def aus_csv(cls, pfad):
-    return cls.aus_csv_datei(pfad)
 
 
 """ aus_csv_datei(pfad) """
@@ -187,3 +184,8 @@ def aus_csv_datei(cls, pfad):
                 produkt = cls.aus_csv_zeile(zeile)
                 produkte.append(produkt)  # fügt das produkt der Liste hinzu produkte []
     return produkte
+
+
+@classmethod
+def aus_csv(cls, pfad):
+    return cls.aus_csv_datei(pfad)
