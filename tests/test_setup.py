@@ -27,10 +27,10 @@ def test_ablauf_verein_bestellt_orangensaft():
     
     """2. Orangensaft (P-1003) heraussuchen
      suchen nach dem Namen oder der ID, je nachdem was dein Produkt-Objekt hat"""
-    orangensaft = next(p for p in produkte if "Orangensaft" in p.name)
+    orangensaft = next(p for p in produkte if "Orangensaft" in p.bezeichnung)
     
     """ 3. Verein anlegen (5% Rabatt)"""
-    verein = Verein("SV Mustersstadt", rabatt=5)
+    verein = Verein(1003, "SV Mustersstadt", "kontakt@verein.de", "VR 12345", gemeinnuetzig=True)
     
     """4. Bestellung anlegen und 24 Stück hinzufügen"""
     bestellung = Bestellung("B-Test", verein)
@@ -45,8 +45,8 @@ def test_ablauf_verein_bestellt_orangensaft():
      MwSt 19% = 12.13 (63.84 * 0.19 = 12.1296)
      Brutto = 63.84 + 12.13 = 75.97"""
     
-    netto = sum(pos.menge * pos.produkt.preis for pos in bestellung.positionen)
-    rabatt = netto * (verein.rabatt_prozent / 100)
+    netto = sum(pos.menge * pos.produkt.nettopreis for pos in bestellung.positionen)
+    rabatt = netto * verein.rabattsatz()
     mwst = (netto - rabatt) * 0.19
     brutto = (netto - rabatt) + mwst
     

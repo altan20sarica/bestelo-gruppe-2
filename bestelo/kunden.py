@@ -190,9 +190,8 @@ class Geschaeftskunde(Kunde):
     def rabattsatz(self) -> float:
         """Gibt für Geschäftskunden 3 Prozent Rabatt zurück,
           für keine Geschäftskunden 0 Prozent"""
-        if self.stammkunde:
-            return 0.03
-        return 0.0
+        return 0.03
+       
     
     def __str__(self) -> str:
         """Gibt lesbare Darstellung des Kunden zurück,
@@ -241,7 +240,7 @@ class Verein(Kunde):
           für keine gemeinnützigen Vereine 0 Prozent"""
         if self.gemeinnuetzig:
             return 0.05
-        return 0.0
+        return 0.02
 
     def begruessung(self) -> str:
         """Begrüßt den Vereinsvorstand mit Vereinsnamen"""
