@@ -1,11 +1,6 @@
 """Konsolen-Demo: python -m bestelo   → Person 5 (Abschnitt 5.5)"""
 
 
-
-
-
-if __name__ == "__main__":
-    main()
 <<<<<<< HEAD
 from pathlib import Path
 from bestelo.bestellungen import Bestellung
