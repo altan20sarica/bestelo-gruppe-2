@@ -1,4 +1,4 @@
-# Bestelo – Gruppe N
+# Bestelo – Gruppe 2
 
 > Allgemeines Shopsystem in Python · Programmieren 2 (BW220) · HWG Ludwigshafen
 > Die Aufgabenbeschreibung finden Sie auf OLAT.
