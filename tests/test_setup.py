@@ -30,28 +30,15 @@ def test_ablauf_verein_bestellt_orangensaft():
     orangensaft = next(p for p in produkte if "Orangensaft" in p.bezeichnung)
     
     """ 3. Verein anlegen (5% Rabatt)"""
-    verein = Verein(1003, "SV Mustersstadt", "kontakt@verein.de", "VR 12345", gemeinnuetzig=True)
+    verein = Verein(1003, "SV Mustersstadt", "info@sv-musterstadt.de", "VR 12345", gemeinnuetzig=True)
     
     """4. Bestellung anlegen und 24 Stück hinzufügen"""
-    bestellung = Bestellung("B-Test", verein)
+    bestellung = Bestellung(verein)
     
-    """Annahme: Die Methode heißt 'position_hinzufuegen' (wie in Aufgabe A)"""
-    bestellung.position_hinzufuegen(24, orangensaft)
+    """Annahme: Die Methode heißt 'hinzufuegen' (wie in Aufgabe A)"""
+    bestellung.hinzufuegen(orangensaft, 24)
     
-    """5. Brutto berechnen
-     Netto = 24 * 2.80 = 67.20
-     Rabatt 5% = 3.36
-     Netto nach Rabatt = 63.84
-     MwSt 19% = 12.13 (63.84 * 0.19 = 12.1296)
-     Brutto = 63.84 + 12.13 = 75.97"""
-    
-    netto = sum(pos.menge * pos.produkt.nettopreis for pos in bestellung.positionen)
-    rabatt = netto * verein.rabattsatz()
-    mwst = (netto - rabatt) * 0.19
-    brutto = (netto - rabatt) + mwst
-    
-    """Prüfen, ob der Bruttobetrag auf 2 Nachkommastellen gerundet 75.97 ergibt"""
-    assert round(brutto, 2) == 75.97
+    assert bestellung.brutto_summe == 75.97
 
 
 def test_demo_zeigt_bruttosumme(capsys):

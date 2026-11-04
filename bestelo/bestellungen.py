@@ -42,8 +42,8 @@ class Bestellposition:
     
     def __str__ (self) -> str:
         """Gibt die Position als Text zurück"""
-        einzelpreis = self.produkt.brutto
-        return (f"{self.menge} × {self.produkt.name} à "
+        einzelpreis = self.produkt.bruttopreis
+        return (f"{self.menge} × {self.produkt.bezeichnung} à "
                 f"{einzelpreis:.2f} € = {self.brutto:.2f} €")
 
 class Bestellung:

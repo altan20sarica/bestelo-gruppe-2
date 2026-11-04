@@ -1,4 +1,4 @@
-# Bestelo – Gruppe N
+# Bestelo – Gruppe 2
 
 > Allgemeines Shopsystem in Python · Programmieren 2 (BW220) · HWG Ludwigshafen
 > Die Aufgabenbeschreibung finden Sie auf OLAT.
@@ -33,55 +33,102 @@ python -m bestelo              # Konsolen-Demo starten
 
 ```mermaid
 classDiagram
+    direction TB
+
     class Kunde {
-        +kundennummer: int
-        +name: str
+        +int kundennummer
+        +str name
+        +str email
+        +__init__(kundennummer, name, email)
+        +ist_gueltige_email(email) bool$
         +begruessung() str
         +rabattsatz() float
+        +__str__() str
+        +__repr__() str
+        +__eq__(other) bool
     }
 
     class Privatkunde {
-        +geburtsjahr: int
+        +int geburtsjahr
+        +bool stammkunde
+        +__init__(kundennummer, name, email, geburtsjahr, stammkunde)
+        +alter(stichjahr) int
         +rabattsatz() float
     }
 
     class Geschaeftskunde {
-        +ansprechpartner: str
+        +str firmenname
+        +str ust_id
+        +int zahlungsziel_tage
+        +__init__(kundennummer, name, email, firmenname, ust_id, zahlungsziel_tage)
+        +begruessung() str
         +rabattsatz() float
+        +__str__() str
     }
 
     class Verein {
+        +str registernummer
+        +bool gemeinnuetzig
+        +__init__(kundennummer, name, email, registernummer, gemeinnuetzig)
+        +begruessung() str
         +rabattsatz() float
     }
 
-    class Bestellung {
-        +bestellnr: str
-        +abgeschlossen: bool
-        +positionen: list
-        +position_hinzufuegen(menge, produkt)
-        +gesamt_netto() float
-    }
-
-    class Position {
-        +menge: int
-        +produkt: Produkt
-        +zeilen_preis() float
-    }
-
     class Produkt {
-        +produkt_id: int
-        +name: str
-        +preis: float
-        +aus_csv(pfad) list
+        +tuple KATEGORIEN$
+        +tuple ERMAESSIGTE_KATEGORIEN$
+        +float MWST_ERMAESSIGT$
+        +float MWST_REGULAER$
+        +str artikelnummer
+        +str bezeichnung
+        +float nettopreis
+        +str kategorie
+        +float mwst_satz
+        +float bruttopreis
+        +__init__(artikelnummer, bezeichnung, nettopreis, kategorie)
+        +aus_csv_zeile(zeile) Produkt$
+        +aus_csv_datei(pfad) list$
+        +__str__() str
+        +__repr__() str
+        +__eq__(other) bool
+        +__lt__(other) bool
+    }
+
+    class Bestellposition {
+        +Produkt produkt
+        +int menge
+        +float netto
+        +float mwst
+        +float brutto
+        +__init__(produkt, menge)
+        +__str__() str
+    }
+
+    class Bestellung {
+        -int _naechste_nummer$
+        +str bestellnummer
+        +Kunde kunde
+        +str status
+        +list positionen
+        +float netto_summe
+        +float rabatt_betrag
+        +float netto_nach_rabatt
+        +float mwst_betrag
+        +float brutto_summe
+        +__init__(kunde)
+        +hinzufuegen(produkt, menge)
+        +abschliessen()
+        +__len__() int
+        +__str__() str
     }
 
     Kunde <|-- Privatkunde
     Kunde <|-- Geschaeftskunde
     Kunde <|-- Verein
 
-    Kunde "1" --> "0..*" Bestellung : hat
-    Bestellung "1" *-- "1..*" Position : enthält
-    Position "1" --> "1" Produkt : referenziert
+    Kunde "1" <-- "0..*" Bestellung : kunde
+    Produkt "1" <-- "0..*" Bestellposition : produkt
+    Bestellung "1" *-- "0..*" Bestellposition : positionen
 ```
 
 
@@ -89,5 +136,7 @@ classDiagram
 
 ## Ideen für Phase 2
 
-- Branche: …
-- Features: …
+- Branche: Bürobedarf und Büroausstattung
+- Features: - Filter nach Kategorie und Preis 
+            - Lagerbestand anzeigen und bei einer Bestellung aktualisieren 
+            - Bestellbestätigung ausgeben

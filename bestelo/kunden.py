@@ -135,12 +135,12 @@ class Privatkunde(Kunde):
 ### 5.2 PERSON 2 ###
 
 class Geschaeftskunde(Kunde):
-    def __init__(self, kundennummer: int, name: str, email: str, firmenname: str, ust_id: str, zahlungsziehl_tage: int = 14) -> None:
+    def __init__(self, kundennummer: int, name: str, email: str, firmenname: str, ust_id: str, zahlungsziel_tage: int = 14) -> None:
         """Erstellt Geschäftskunde mit Firmenname, Umsatzsteuer-ID und Zahlungszieltagen"""
         super().__init__(kundennummer, name, email)
         self.firmenname = firmenname
         self.ust_id = ust_id
-        self.zahlungsziehl_tage = zahlungsziehl_tage
+        self.zahlungsziel_tage = zahlungsziel_tage
 
     @property
     def firmenname(self) -> str:
