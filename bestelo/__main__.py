@@ -27,7 +27,7 @@ def beleg_drucken(bestellung: Bestellung) -> None:
     print(f"{'Rabatt:':<16}{bestellung.rabatt_betrag:>9.2f} €")
     print(f"{'Netto nach Rabatt:':<16}{bestellung.netto_nach_rabatt:>9.2f} €")
     print(f"{'MwSt.:':<16}{bestellung.mwst_betrag:>9.2f} €")
-    print(f"{'Brutto:':<16}{bestellung.brutto_summeto:>9.2f} €")
+    print(f"{'Brutto:':<16}{bestellung.brutto_summe:>9.2f} €")
     print("=" * 55)
 
 
@@ -48,8 +48,8 @@ def main() -> None:
     bestellung1 = Bestellung(kunde2)
     
     """Produkte für die Bestellung heraussuchen"""
-    kaffee = next(p for p in produkte if "Kaffee" in p.bezeichung)
-    wasser = next(p for p in produkte if "Mineralwasser" in p.bezeichung)
+    kaffee = next(p for p in produkte if "Kaffee" in p.bezeichnung)
+    wasser = next(p for p in produkte if "Mineralwasser" in p.bezeichnung)
     
     bestellung1.hinzufuegen(kaffee, 3)
     bestellung1.hinzufuegen(wasser, 6)
