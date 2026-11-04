@@ -136,5 +136,7 @@ classDiagram
 
 ## Ideen für Phase 2
 
-- Branche: …
-- Features: …
+- Branche: Bürobedarf und Büroausstattung
+- Features: - Filter nach Kategorie und Preis 
+            - Lagerbestand anzeigen und bei einer Bestellung aktualisieren 
+            - Bestellbestätigung ausgeben
