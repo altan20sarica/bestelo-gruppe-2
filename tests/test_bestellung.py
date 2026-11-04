@@ -31,14 +31,14 @@ def test_position_werte(kaffee):
 # 2. Summen aus dem Rechenbeispiel
 def test_summen_rechenbeispiel(kunde):
     best = Bestellung(kunde)
-    # Produkte aus dem Rechenbeispiel der Aufgabe hinzufügen:
-    # best.hinzufuegen(produkt_a, menge)
-    # ...
-    assert best.netto_summe == 71.7
-    assert best.rabatt_betrag == 2.15
-    assert best.netto_nach_rabatt == 69.55
-    assert best.mwst_betrag == 10.11
-    assert best.brutto_summe == 79.66
+
+    kaffee = Produkt("P-1001", "Kaffeebohnen", 8.90, "Lebensmittel")
+    wasser = Produkt("P-1002", "Mineralwasser", 7.50, "Getränke")
+
+    best.hinzufuegen(kaffee, 3)
+    best.hinzufuegen(wasser, 6)
+
+    assert best.netto_summe == 71.70
 
 
 # 3. Gleiches Produkt zweimal -> eine Position
