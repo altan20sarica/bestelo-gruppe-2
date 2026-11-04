@@ -1,5 +1,5 @@
 import pytest
-from bestelo import Bestellung, Bestellposition, Produkt, Kunde  # Import anpassen
+from bestelo.bestellungen import Bestellung, Bestellposition, Produkt, Kunde  # Import anpassen
 
 
 @pytest.fixture
