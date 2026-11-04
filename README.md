@@ -31,8 +31,7 @@ python -m bestelo              # Konsolen-Demo starten
 
 ## UML-Klassendiagramm
 
-```
-mermaid
+```mermaid
 classDiagram
     direction TB
 
