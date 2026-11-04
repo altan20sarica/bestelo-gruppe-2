@@ -65,7 +65,6 @@ def main() -> None:
 
     """2. Kunden anlegen"""
     kunde1 = Privatkunde(1001, "Anna Müller", "anna@beispiel.de", 1995, stammkunde=True)
-<<<<<<< HEAD
     kunde2 = Geschaeftskunde(
         1002, "Schmidt IT GmbH", "kontakt@schmidt.de", "DE123456789"
     )
@@ -83,36 +82,13 @@ def main() -> None:
     bestellung1.position_hinzufuegen(3, kaffee)
     bestellung1.position_hinzufuegen(6, wasser)
 
-=======
-    kunde2 = Geschaeftskunde(1002, "Ben Schmidt", "ben@schmidt-it.de", "Schmidt IT GmbH", "DE123456789")
-    kunde3 = Verein(1003, "SV Mustersstadt", "info@sv-musterstadt.de", "VR 12345", gemeinnuetzig=True)
-
-    """3. Erste Bestellung (Kunde 2)"""
-    bestellung1 = Bestellung(kunde2)
-    
-    """Produkte für die Bestellung heraussuchen"""
-    kaffee = next(p for p in produkte if "Kaffee" in p.bezeichnung)
-    wasser = next(p for p in produkte if "Mineralwasser" in p.bezeichnung)
-    
-    bestellung1.hinzufuegen(kaffee, 3)
-    bestellung1.hinzufuegen(wasser, 6)
-
-    bestellung1.abschliessen()
->>>>>>> 8f6a87de0996bc93caa254a518b8052342d8c146
     beleg_drucken(bestellung1)
 
     """ 4. Zweite offene Bestellung (Kunde 3)"""
     bestellung2 = Bestellung(kunde3)
     saft = next(p for p in produkte if "Orangensaft" in p.bezeichnung)
-<<<<<<< HEAD
     bestellung2.position_hinzufuegen(24, saft)
 
-=======
-    bestellung2.hinzufuegen(saft, 24)
-
-    print(bestellung2)
-    
->>>>>>> 8f6a87de0996bc93caa254a518b8052342d8c146
     """Kurze Zusammenfassung für Bestellung 2 ausgeben"""
     anzahl = len(bestellung2.positionen)
     print(
