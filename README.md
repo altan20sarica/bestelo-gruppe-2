@@ -1,4 +1,4 @@
-# Bestelo – Gruppe N
+# Bestelo – Gruppe 2
 
 > Allgemeines Shopsystem in Python · Programmieren 2 (BW220) · HWG Ludwigshafen
 > Die Aufgabenbeschreibung finden Sie auf OLAT.
@@ -55,7 +55,7 @@ classDiagram
     }
 
     class Bestellung {
-        +bestellnr: str
+        +bestellnummer: str
         +abgeschlossen: bool
         +positionen: list
         +position_hinzufuegen(menge, produkt)
