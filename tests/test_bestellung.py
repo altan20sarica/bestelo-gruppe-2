@@ -1,16 +1,17 @@
 import pytest
-from bestelo.bestellungen import Bestellung, Bestellposition, Produkt, Kunde  # Import anpassen
-
+from bestelo.bestellungen import Bestellung, Bestellposition  # Import anpassen
+from bestelo.produkte import Produkt
+from bestelo.kunden import Kunde
 
 @pytest.fixture
 def kaffee():
     # Konstruktor anpassen: Bezeichnung, Nettopreis, MwSt-Satz
-    return Produkt("Kaffeebohnen", 10.00, 0.07)
+    return Produkt( "P-1001", "Kaffeebohnen", 10.00, "Lebensmittel")
 
 
 @pytest.fixture
 def kunde():
-    return Kunde("Test Kunde")  # ggf. anpassen
+    return Kunde( 1001, "Test Kunde", "test@beispiel.de")  # ggf. anpassen
 
 
 # 1. Bestellposition: Menge 0 -> ValueError
